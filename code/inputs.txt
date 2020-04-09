@@ -257,3 +257,52 @@ is_bound_ideal=True # plot ideal boundary
 is_title=True # show title w metrics on graph
 bound_limit=6. # how far to plot boundary
 
+# yacht
+type_in = '~'+'yacht' #'~'+
+loss_type = 'qd_soft' # lube_soft gauss_like umae mse
+n_samples = 200
+h_size = [50]
+alpha = 0.01
+n_epoch = 2000
+optim = 'adam' # SGD adam
+l_rate = 0.005
+decay_rate=0.98
+soften = 160. #150.
+lambda_in = 6.
+sigma_in=0.2
+is_run_test=True
+n_ensemble=5
+n_bootstraps=1
+n_runs=20 if is_run_test else 1
+is_batch=True
+n_batch=100
+lube_perc=90. # 50 to 100
+perc_or_norm='norm' # perc norm
+is_early_stop=False
+is_bootstrap=False if n_bootstraps == 1 else True
+train_prop=0.9
+
+# naval
+type_in = '~'+'naval' #'~'+
+loss_type = 'qd_soft' # lube_soft gauss_like umae mse
+n_samples = 200
+h_size = [50]
+alpha = 0.05
+n_epoch = 800
+optim = 'adam' # SGD adam
+l_rate = 0.006
+decay_rate=0.998
+soften = 160. #150.
+lambda_in = 4.
+sigma_in=0.1
+is_run_test=True
+n_ensemble=5
+n_bootstraps=1
+n_runs=20 if is_run_test else 1
+is_batch=True
+n_batch=100
+lube_perc=90. # 50 to 100
+perc_or_norm='norm' # perc norm
+is_early_stop=False
+is_bootstrap=False if n_bootstraps == 1 else True
+train_prop=0.9

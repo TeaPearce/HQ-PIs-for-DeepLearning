@@ -148,6 +148,13 @@ class DataGenerator:
 			elif self.type_in=="~concrete":
 				path = 'Concrete_Data.csv'
 				data = np.loadtxt(path, delimiter=',',skiprows=1)
+			elif self.type_in=="~yacht":
+				path = 'yacht.txt'
+				data = np.loadtxt(path,skiprows=0)
+			elif self.type_in=="~naval":
+				path = 'naval.txt'
+				data = np.loadtxt(path,skiprows=0)
+
 
 			# work out normalisation constants (need when unnormalising later)
 			scale_c = np.std(data[:,-1])

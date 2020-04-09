@@ -11,6 +11,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL']='2' # avoids a warning
 importlib.reload(DeepNetPI)
 importlib.reload(DataGen)
 importlib.reload(utils)
+import sys
 
 from DataGen import DataGenerator
 from DeepNetPI import TfNetwork
@@ -22,29 +23,56 @@ import datetime
 start_time = datetime.datetime.now()
 
 # inputs
-type_in = 'x_cubed_gap' 	# data type to use - drunk_bow_tie x_cubed_gap ~boston concrete
-loss_type = 'qd_soft' 		# loss type to train on - qd_soft mve mse (mse=simple point prediction)
-n_samples = 100		# if generating data, how many points to generate
-h_size = [50]	# number of hidden units in network: [50]=layer_1 of 50, [8,4]=layer_1 of 8, layer_2 of 4
-alpha = 0.05		# data points captured = (1 - alpha)
-n_epoch = 3000		# number epochs to train for
-optim = 'adam' 		# opitimiser - SGD adam
-l_rate = 0.02		# learning rate of optimiser
-decay_rate=0.95		# learning rate decay
-soften = 160. 		# hyper param for QD_soft
-lambda_in = 15. 	# hyper param for QD_soft
-sigma_in=0.4 		# initialise std dev of NN weights
-is_run_test=False	# if averaging over lots of runs - turns off some prints and graphs
-n_ensemble=5		# number of individual NNs in ensemble
-n_bootstraps=1 		# how many boostrap resamples to perform
-n_runs=20 if is_run_test else 1
-is_batch=True 		# train in batches?
-n_batch=100 		# batch size
-lube_perc=90. 		# if model uncertainty method = perc - 50 to 100
-perc_or_norm='norm' # model uncertainty method - perc norm (paper uses norm)
-is_early_stop=False # stop training early (didn't use in paper)
-is_bootstrap=False if n_bootstraps == 1 else True
-train_prop=0.9 		# % of data to use as training
+# naval
+if len(sys.argv) > 1:
+	type_in = '~'+'naval' #'~'+
+	loss_type = 'qd_soft' # lube_soft gauss_like umae mse
+	n_samples = 200
+	h_size = [50]
+	alpha = 0.05
+	n_epoch = 800
+	optim = 'adam' # SGD adam
+	l_rate = 0.006
+	decay_rate=0.998
+	soften = 160. #150.
+	lambda_in = 4.
+	sigma_in=0.1
+	is_run_test=True
+	n_ensemble=5
+	n_bootstraps=1
+	n_runs=20 if is_run_test else 1
+	is_batch=True
+	n_batch=100
+	lube_perc=90. # 50 to 100
+	perc_or_norm='norm' # perc norm
+	is_early_stop=False
+	is_bootstrap=False if n_bootstraps == 1 else True
+	train_prop=0.9
+else: # yacht
+	# yacht
+	type_in = '~' + 'yacht'  # '~'+
+	loss_type = 'qd_soft'  # lube_soft gauss_like umae mse
+	n_samples = 200
+	h_size = [50]
+	alpha = 0.01
+	n_epoch = 2000
+	optim = 'adam'  # SGD adam
+	l_rate = 0.005
+	decay_rate = 0.98
+	soften = 160.  # 150.
+	lambda_in = 6.
+	sigma_in = 0.2
+	is_run_test = True
+	n_ensemble = 5
+	n_bootstraps = 1
+	n_runs = 20 if is_run_test else 1
+	is_batch = True
+	n_batch = 100
+	lube_perc = 90.  # 50 to 100
+	perc_or_norm = 'norm'  # perc norm
+	is_early_stop = False
+	is_bootstrap = False if n_bootstraps == 1 else True
+	train_prop = 0.9
 
 out_biases=[3.,-3.] # chose biases for output layer (for mve is overwritten to 0,1)
 activation='relu' 	# NN activation fns - tanh relu
@@ -60,7 +88,7 @@ is_print_info=True
 var_plot=0 # lets us plot against different variables, use 0 for univariate
 is_err_bars=True
 is_norm_plot=False
-is_boundary=True # boundary stuff ONLY works for univariate - turn off for larger
+is_boundary=False # boundary stuff ONLY works for univariate - turn off for larger
 is_bound_val=False # plot validation points for boundary
 is_bound_train=True # plot training points for boundary
 is_bound_indiv=True # plot individual boundary estimates
